@@ -1,0 +1,85 @@
+@foreach ($data as $data)
+<tr>
+    <th scope="row">{{$data->id}}</th>
+    <td>{{$data->filename}}</td>
+    <td>{{$data->description}}</td>
+    {{-- <td>{{$data->file}}</td> --}}
+    <td> <a href="{{url('view_file', $data->id)}}">View</a></td>
+    <td> <a href="{{url('download_file', $data->file)}}">Download <i class="bi arrow-down-square-fill"></i></a></td>
+    <td class="action_td">
+      <a href="{{url('edit_file', $data->id)}}" class="text-primary edit_button"><i class="ri-ball-pen-fill"></i></a>
+      <form method="POST" action="{{route('delete_file', $data->id)}}">
+          @csrf
+          <button type="submit" class="text-danger delete_button" data-toggle="tooltip"
+          data-placement="top" data-original-title="Delete"><i class="ri-delete-bin-5-fill"></i></button>
+      </form>
+    </td>
+</tr>
+@endforeach
+
+
+
+
+// $login_data = Login::user_login($email, $password)->toArray();
+    // $rows = count($login_data);
+    // if($rows > 0 && $rows <= 1){
+    //     //=== Setting up a session ==//
+    // Session::put('user_session', $login_data);
+
+    // Alert::toast('Log In Successfully','success');
+    // // return redirect()->back();
+    // return redirect('pages.show_file');
+
+
+
+=================ADD USER WITHOUT PHOTO =====WORKING FINE===============
+public function add_user(Request $request){
+        try {
+            $request->validate([
+                'txt_firstname' => 'required|regex:/^[a-zA-Z-\s]+$/',
+                'txt_lastname' => 'required|regex:/^[a-zA-Z-\s]+$/',
+                'txt_email' => 'required|email|unique:tbl_users,email',
+                'txt_city' => 'required',
+                'txt_role' => 'required',
+                'txt_phone_number' => 'required|numeric',
+                'txt_profession' => 'required|regex:/^[a-zA-Z-\s]+$/',
+                'txt_address1' => 'required'
+                ], [
+                'txt_firstname.required' => 'Firstname is required',
+                'txt_lastname.required' => 'Lastname is required',
+                'txt_firstname.regex' => 'Firstname is must be in letters only',
+                'txt_lastname.regex' => 'Lastname is must be in letters only',
+                'txt_email.required' => 'Email is required',
+                'txt_email.email' => 'Email field must have a valid email address',
+                'txt_email.unique' => 'Email already exist',
+                'txt_city.required' => 'City Name is required',
+                'txt_role.required' => 'Assign user a role',
+                'txt_phone_number.required' => 'Phone number is required',
+                'txt_phone_number.numeric' => 'Phone number must be in numbers only',
+                'txt_profession.required' => 'Your profession is required',
+                'txt_profession.regex' => 'Your profession must be in letters only',
+                'txt_address1.required' => 'First Address Line is required'
+            ]);
+
+        $firstname = $request->get('txt_firstname');
+        $lastname = $request->get('txt_lastname');
+        $email = $request->get('txt_email');
+        $password = "";
+        $city = $request->get('txt_city');
+        $role = $request->get('txt_role');
+        $phone_number = $request->get('txt_phone_number');
+        $profession = $request->get('txt_profession');
+        $address = $request->get('txt_address1')." ".$request->get('txt_address2');
+
+        User::add_user($firstname, $lastname, $email, $password, $city, $role, $phone_number, $profession, $address);
+
+        Alert::toast($firstname.' Added Successfully','success');
+
+        return redirect()->back();
+
+        }
+        catch (exception $e) {
+                echo 'Caught exception';
+            }
+    }
+

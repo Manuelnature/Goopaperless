@@ -1,0 +1,92 @@
+.edit_button, .delete_button {
+	border: none;
+	background: none;
+}
+
+.action_td {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+
+
+
+.copy, .visit{
+    background: none !important;
+    color: #000;
+    font-size: 9px !important;
+}
+.copy, .visit:active{
+    background: none !important;
+    color: #000;
+    font-size: 9px !important;
+}
+
+
+.copy:hover, .visit:hover{
+    background: none !important;
+    color: #000;
+    font-size: 9px !important;
+}
+
+.folder_url {
+    border: none !important;
+    font-size: 8px !important;
+    width: 30px !important;
+}
+
+#folder_table, #file_table, #users_table, #link_table{
+    font-size: 13px !important;
+}
+
+.t-header {
+    font-size: 13px !important;
+}
+
+.download, .view{
+    background: none !important;
+    color: #000 !important;
+    font-size: 12px !important;
+}
+
+/* .active {
+    background: #000 !important;
+} */
+
+.sidebar-nav .nav-item {
+    font-size: 9px !important;
+  }
+
+  .file_link {
+    border: none !important;
+    font-size: 8px !important;
+    width: 30px !important;
+}
+
+
+
+/* ========= NEW TEMPLATE ========= */
+
+.login_content {
+    border: 1px solid ;
+    /* border-color: #658354 !important; */
+    /* border-color: #2A3F54 !important; */
+    background-color: #2A3F54 !important;
+    border-radius: 1rem;
+    border-radius: 1rem;
+    padding: 4rem;
+    /* width: 200px !important; */
+}
+
+#login_wrapper {
+    background-color: #2A3F54 !important;
+}
+
+#submit_btn{
+    background-color:  #fff !important;
+    color: #2A3F54 !important;
+}
+
+.color_white {
+    color: #fff !important;
+}

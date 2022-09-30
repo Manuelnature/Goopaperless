@@ -1,0 +1,24 @@
+php artisan make:provider GoogleDriveServiceProvider
+
+-- Go to config/app.php and register GoogleDriveServiceProvider by adding below code to the provider group
+App\Providers\GoogleDriveServiceProvider::class,
+
+-- Install Google API Services Client via Composer
+composer require google/apiclient
+
+--Go to Providers/GoogleDriveServiceProvider.php
+Paste below code in the boots function
+
+	\Storage::extend("google", function($app, $config) {
+            $client = new \Google_Client();
+            $client->setClientId($config['clientId']);
+            $client->setClientSecret($config['clientSecret']);
+            $client->refreshToken($config['refreshToken']);
+            $service = new \Google_Service_Drive($client);
+            $adapter = new GoogleDriveAdapter($service, $config['folderId']);
+            // dd($adapter);
+            return new Filesystem($adapter);
+        });
+
+At the top of the class use the below code 
+use Google_Client;
