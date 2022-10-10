@@ -165,7 +165,7 @@ class UserController extends Controller
                 $update_user->save();
 
                 Alert::toast($update_user->firstname.'\'s record updated successfully','success');
-                return redirect('add_user');
+                return redirect('users');
 
             }
             else{
@@ -188,6 +188,7 @@ class UserController extends Controller
                 $update_user->save();
 
                  Alert::toast($update_user->firstname.'\'s record updated successfully','success');
+                 return redirect('users');
             }
 
         } catch (exception $e) {
@@ -199,10 +200,10 @@ class UserController extends Controller
 
     public function delete_user(User $id){
         try {
-            // $data=new UploadFile();
             $id->delete();
             Alert::toast('Record Deleted','warning');
-            return redirect('add_user');
+            return redirect('users');
+
         } catch (exception $e) {
             echo 'Caught exception';
         }

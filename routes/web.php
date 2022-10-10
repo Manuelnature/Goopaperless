@@ -46,7 +46,7 @@ Route::group(['middleware' => 'disable_back_button'], function () {
         Route::get('users', [UserController::class, 'index']);
         Route::post('add_user', [UserController::class, 'add_user'])->name('add_new_user');
 
-        Route::get('edit_user/{id}', [UserController::class, 'edit_user'])->name('add_user');
+        Route::get('edit_user/{id}', [UserController::class, 'edit_user'])->name('edit_user');
         Route::post('update_user/{id}', [UserController::class, 'update_user'])->name('update_user');
         Route::post('delete_user/{id}', [UserController::class, 'delete_user'])->name('delete_user');
 
