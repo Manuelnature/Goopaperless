@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Sep 30, 2022 at 02:33 AM
+-- Generation Time: Oct 10, 2022 at 02:38 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -124,8 +124,9 @@ CREATE TABLE `tbl_files` (
 --
 
 INSERT INTO `tbl_files` (`id`, `title`, `description`, `file_name`, `file_id`, `file_url`, `folder_id`, `access_to`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(2, 'Andrew 101', 'Mathematics course pdf', 'Andrew 1011664309259.png', '1crdKFec3J4C8aBZVDWX4fpnfltNdB7l7', 'https://drive.google.com/drive/folders/1crdKFec3J4C8aBZVDWX4fpnfltNdB7l7', 1, '[{\"order\":0,\"user_id\":null},{\"order\":1,\"user_id\":\"Andrew Sowah\"},{\"order\":2,\"user_id\":\"12\"}]', '2022-09-27 20:07:45', 'Kwame Newman Ayew', '2022-09-29 22:33:26', 'Kwame Newman Ayew'),
-(3, 'man201', 'New one here', 'man2011664487018.png', '1iwzvMJYfSi6U9FXQyMM02J_suvQi4OCr', 'https://drive.google.com/drive/folders/1iwzvMJYfSi6U9FXQyMM02J_suvQi4OCr', 2, '[{\"order\":0,\"user_id\":null},{\"order\":1,\"user_id\":\"13\"},{\"order\":2,\"user_id\":\"12\"}]', '2022-09-29 21:30:24', 'Kwame Newman Ayew', '2022-09-30 00:25:32', 'Kwame Newman Ayew');
+(6, 'csc201', 'First file for kofi', 'csc2011665355484.pdf', '1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', 'https://drive.google.com/drive/folders/1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', 3, '[{\"order\":0,\"user_id\":\"16\"}]', '2022-10-09 22:44:49', '17', '2022-10-09 22:47:42', 'Kukua Cobbina'),
+(7, 'math201', 'My math book by Kofi Yankah', 'math2011665355529.pdf', '1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', 'https://drive.google.com/drive/folders/1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', 3, '[{\"order\":0,\"user_id\":null},{\"order\":1,\"user_id\":null}]', '2022-10-09 22:45:33', '16', '2022-10-09 22:46:41', 'Kukua Cobbina'),
+(8, 'Csc702', 'First csc for Kof', 'Csc7021665357294.pdf', '1KC-ZkxEkG0l9cge5AoNL_HdvqNt9stO4', 'https://drive.google.com/drive/folders/1KC-ZkxEkG0l9cge5AoNL_HdvqNt9stO4', 4, '[{\"order\":0,\"user_id\":\"16\"}]', '2022-10-09 23:14:58', 'Kukua Cobbina', '2022-10-09 23:15:29', 'Kukua Cobbina');
 
 -- --------------------------------------------------------
 
@@ -139,16 +140,18 @@ CREATE TABLE `tbl_folders` (
   `description` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `folder_id` varchar(255) DEFAULT NULL,
-  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_by` varchar(100) DEFAULT NULL,
+  `updated_at` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_folders`
 --
 
-INSERT INTO `tbl_folders` (`id`, `name`, `description`, `url`, `folder_id`, `date_created`) VALUES
-(1, 'Andrew', 'First folder', 'https://drive.google.com/drive/folders/1crdKFec3J4C8aBZVDWX4fpnfltNdB7l7', '1crdKFec3J4C8aBZVDWX4fpnfltNdB7l7', '2022-09-27 20:04:55'),
-(2, 'Manuel', 'my new folder', 'https://drive.google.com/drive/folders/1iwzvMJYfSi6U9FXQyMM02J_suvQi4OCr', '1iwzvMJYfSi6U9FXQyMM02J_suvQi4OCr', '2022-09-29 21:29:48');
+INSERT INTO `tbl_folders` (`id`, `name`, `description`, `url`, `folder_id`, `date_created`, `updated_by`, `updated_at`) VALUES
+(3, 'Manuel', 'Manuel\'s folder', 'https://drive.google.com/drive/folders/1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', '1vY80CksiiF1mJAhidGIr9cwOezuEjDP1', '2022-10-09 22:43:42', 'Kukua Cobbina', '2022-10-09 23:13:19'),
+(4, 'Andrew', 'Andrew Folder', 'https://drive.google.com/drive/folders/1KC-ZkxEkG0l9cge5AoNL_HdvqNt9stO4', '1KC-ZkxEkG0l9cge5AoNL_HdvqNt9stO4', '2022-10-09 22:44:04', 'Kukua Cobbina', '2022-10-09 23:14:14');
 
 -- --------------------------------------------------------
 
@@ -166,13 +169,6 @@ CREATE TABLE `tbl_links` (
   `updated_at` varchar(200) DEFAULT NULL,
   `updated_by` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_links`
---
-
-INSERT INTO `tbl_links` (`id`, `link`, `shared_to`, `description`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(6, 'https://www.bhimconcert.com/', 'Frank Adjei Mensah', NULL, '2022-09-27 20:09:03', 'Kwame Newman Ayew', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,13 +200,13 @@ CREATE TABLE `tbl_users` (
 INSERT INTO `tbl_users` (`id`, `firstname`, `lastname`, `email`, `password`, `city`, `role`, `phone_number`, `profession`, `address`, `photo`, `date_created`, `updated_by`, `updated_at`) VALUES
 (9, 'Andrew', 'Sowah', 'andre@yahoo.com', '$2y$10$1276b5SccSPDfLQCQr8nfO1lRofkiwJjQggic.FOnymxCIK9dW3CS', 'Accra', 'Super Admin', '022145454', 'Programmer', 'Taifa Haifa', NULL, '2022-08-11 21:51:51', NULL, NULL),
 (10, 'Abena', 'Kuku', 'kuku@gmail.com', '$2y$10$bqyGtDM.6WxpL6uDzI/c8OFLTVTX5E3/uCfKoKRoPiRD8LSVzlvsS', 'Tema New', 'Super Admin', '055636214', 'Teacher and nurse', 'Comm. 17', 'ProfilePhoto866-2022-09-23-01-58-30.png', '2022-09-01 22:30:54', 'Kwame Ayew', '2022-09-23 02:00:38'),
-(12, 'Kwame Newman', 'Ayew', 'ayew@gmail.com', '$2y$10$HHRAjsID4esZP0jByreKQeTH3b4kKT3Ev5qDmJlAj95eF6YC8s.dO', 'Tamale City', 'Super Admin', '0245787788', 'Footballer', 'Tamale New Market', NULL, '2022-09-02 01:22:01', 'Kwame Newman Ayew', '2022-09-27 19:45:30'),
+(12, 'Kwame Newman', 'Ayew', 'ayew@gmail.com', '$2y$10$UBLW2zEdD.sjVMdnmebte.aAi7eXJgDMBkl6g.QfVsXHLxQKT3kHe', 'Tamale City', 'Super Admin', '0245787788', 'Footballer', 'Tamale New Market', NULL, '2022-09-02 01:22:01', 'Kwame Newman Ayew', '2022-09-27 19:45:30'),
 (13, 'Kukua', 'Cobbina', 'kukua@gmail.com', '$2y$10$hWdPJD.xux0dBK1kB0SOh.H2j1BQIcnlinZ1Ba9YNOpzZGA0e0kxO', 'Cape Coast', 'Admin', '0212336699', 'Accountant', 'Moree Junction', 'ProfilePhoto890-2022-09-02-15-06-43.jpg', '2022-09-02 15:06:43', NULL, NULL),
 (14, 'Ewura', 'Efua', 'efua@gmail.com', '$2y$10$KusU.w33VwYA5PAJbn0N3uwqFZnz48EPN0ast9j8fK8kBCPKlAqHq', 'Elmina', 'Basic', '0245636363', 'Sales Manager', 'Elmina', NULL, '2022-09-02 15:12:07', NULL, NULL),
 (15, 'Frank', 'Adjei Mensah', 'frank@gmail.com', '$2y$10$E0Bq8xyJNNksR0hyF0w8C.lHb8oOCQhTcoTLcxUOhSwDF4gYMziqq', 'Kasoa', 'Admin', '0222454545', 'Medical Doctor', 'Kasoa Millenium City', 'ProfilePhoto974-2022-09-02-20-16-17.jpg', '2022-09-02 20:16:17', NULL, NULL),
-(16, 'Kofi', 'Yankah', 'yankah@gmail.com', '', 'Sunyani', 'Admin', '0245787788', 'Accountant', 'TML High Street', 'ProfilePhoto905-2022-09-21-22-17-29.jpg', '2022-09-21 22:17:29', NULL, NULL),
-(17, 'Kukua', 'Cobbina', 'kcobby@gmail.com', '', 'Angloga', 'Admin', '0245787788', 'Accountant', 'Hey there', 'ProfilePhoto900-2022-09-23-02-02-48.png', '2022-09-23 02:02:48', NULL, NULL),
-(18, 'Kofi', 'yankah', 'kya@gmail.com', '$2y$10$3iluXPtp3pK6Eaal//Euo.hpe8jfXX2U19N4fcqr2iLVx7PhHbPae', 'Manhean', 'Admin', '0222145445', 'Footballer and manager', 'Hey', 'ProfilePhoto858-2022-09-23-02-18-30.png', '2022-09-23 02:18:30', 'Kwame Ayew', '2022-09-23 02:19:05');
+(16, 'Kofi Abiem', 'Yankah', 'yankah@gmail.com', '$2y$10$bBqvP4ZfszEuj9/kM/3.m.04qahy5JHq28LwLUrBrqEkakKmz2ze6', 'Sunyani', 'Basic', '0245787788', 'Accountant', 'TML High Street', NULL, '2022-09-21 22:17:29', NULL, NULL),
+(17, 'Kukua', 'Cobbina', 'man@gmail.com', '$2y$10$J8GU5.Qz7Se1RNV.CZfeuO/a7IF5xFf.C3Ou7F9BJorgkY24Iq3Ve', 'Angloga', 'Super Admin', '0245787788', 'Accountant', 'Hey there', NULL, '2022-09-23 02:02:48', NULL, NULL),
+(18, 'Kofi', 'yankah', 'kya@gmail.com', '$2y$10$3iluXPtp3pK6Eaal//Euo.hpe8jfXX2U19N4fcqr2iLVx7PhHbPae', 'Manhean', 'Admin', '0222145445', 'Footballer and manager', 'Hey', NULL, '2022-09-23 02:18:30', 'Kwame Ayew', '2022-09-23 02:19:05');
 
 --
 -- Indexes for dumped tables
@@ -293,13 +289,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `tbl_files`
 --
 ALTER TABLE `tbl_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_folders`
 --
 ALTER TABLE `tbl_folders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_links`
