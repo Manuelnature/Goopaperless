@@ -21,10 +21,30 @@ class UploadFileController extends Controller
         $get_all_folders = Folder::all();
         $get_all_files = UploadFile::all();
 
+        if (count($get_all_files) > 0) {
+            $get_all_files = $get_all_files;
+        } else {
+            $get_all_files = "";
+        }
+
+
         $user_session = Session::get('user_session')[0];
+
+        $user_id = $user_session->id;
         $active_user = $user_session->firstname." ".$user_session->lastname;
 
-        $all_my_uploaded_files = UploadFile::where('created_by', $active_user)->get();
+        // foreach ($get_all_files as $all_files) {
+        //     $access_users = json_decode($all_files->access_to, true);
+        //     dump($access_users);
+        // }
+
+        // $access_users = json_decode($get_all_files[0]->access_to, true);
+        // dump($access_users);
+
+        Log::channel('my_log')->info('data saved in Drive');
+
+        $all_my_uploaded_files = UploadFile::where('created_by', $user_id)->get();
+        // dd($all_my_uploaded_files);
         $get_all_users = User::all();
         return view('pages.upload_file', compact('get_all_folders', 'get_all_files', 'all_my_uploaded_files'));
     }
@@ -38,6 +58,7 @@ class UploadFileController extends Controller
 
                 $user_session = Session::get('user_session')[0];
                 $active_user = $user_session->firstname." ".$user_session->lastname;
+                $current_user_id = $user_session->id;
 
                 $file_title = $request->get('txt_file_title');
                 // $filename = $file_title.time().'.'.$request->file('txt_filename')->getClientOriginalExtension();
@@ -98,6 +119,7 @@ class UploadFileController extends Controller
                 $data->file_url = $url;
                 $data->file_id = $path;
                 $data->created_by = $active_user;
+                // $data->created_by = $current_user_id;
                 $data->save();
 
                 Alert::toast('File Uploaded Successfully','success');
@@ -373,7 +395,7 @@ class UploadFileController extends Controller
         } catch (exception $e) {
             echo 'Caught exception';
         }
-     }
+    }
 
 
     public function delete_file_old(UploadFile $id){

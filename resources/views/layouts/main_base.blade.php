@@ -92,8 +92,9 @@
                     <ul class="nav side-menu">
                         <li><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i> Dashboard </a>
                         </li>
-                        <li><a href="{{url('create_folder')}}"><i class="fa fa-folder"></i> Create Folder</a>
-                        </li>
+                        @if ($user_session_details[0]->role == 'Super Admin' || $user_session_details[0]->role == 'Admin')
+                            <li><a href="{{url('create_folder')}}"><i class="fa fa-folder"></i> Create Folder</a></li>
+                        @endif
                         <li><a href="{{url('upload_file')}}"><i class="fa fa-clone"></i> Upload File </a>
                         </li>
                         <li><a href="{{url('share_link')}}"><i class="fa fa-share"></i> Share Link</a>

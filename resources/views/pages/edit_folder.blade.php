@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Edit Uploaded file</h2>
+                        <h2>Edit Folder Info</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -26,29 +26,16 @@
                     <div class="x_content">
 
                         <!-- start form for validation -->
-                        <form id="demo-form" action="{{route('update_file', $file_to_edit->id)}}" method="post" enctype="multipart/form-data">
+                        <form id="demo-form" action="{{route('update_folder', $folder_to_edit->id)}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
-                               <div class="col-md-6 mb-4">
-                                    <label for="txt_edit_title">File Name</label>
-                                    <input type="text" id="txt_edit_title" class="form-control" name="txt_edit_title" value="{{ $file_to_edit->title}}"/>
-                                    <span class="text-danger">@error('txt_edit_title') {{ $message }} @enderror</span>
-                               </div>
-                               <div class="col-md-6 mb-4">
-                                    <label for="txt_give_access_to">Select User To Have Access</label>
-                                    <select class="select2_single form-control" tabindex="-1" name="txt_give_access_to" id="txt_give_access_to">
-                                        <option disabled selected>Select User</option>
-                                        @foreach ($get_all_users as $users)
-                                            <option value="{{ $users->id}}">{{ $users->firstname }} {{ $users->lastname }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger">@error('txt_give_access_to') {{ $message }} @enderror</span>
-                                </div>
-                            </div>
+                            <label for="txt_edit_folder_name">Folder Name</label>
+                            <input type="text" id="txt_edit_folder_name" class="form-control" name="txt_edit_folder_name" value="{{ $folder_to_edit->name}}" readonly/>
+                            <span class="text-danger">@error('txt_edit_folder_name') {{ $message }} @enderror</span>
                             <br>
-                            <label for="txt_description">Description</label>
-                            <textarea id="txt_edit_description"  class="form-control" name="txt_edit_description" data-parsley-trigger="keyup">{{ $file_to_edit->description }}</textarea>
-                            <span class="text-danger">@error('txt_edit_description') {{ $message }} @enderror</span>
+                            <label for="txt_folder_description">Description</label>
+
+                            <textarea id="txt_edit_folder_description"  class="form-control" name="txt_edit_folder_description" data-parsley-trigger="keyup">{{ $folder_to_edit->description}}</textarea>
+                            <span class="text-danger">@error('txt_edit_folder_description') {{ $message }} @enderror</span>
 
                             <br />
                             <div class="ln_solid"></div>
@@ -58,6 +45,7 @@
                                     <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>
+
                         </form>
                         <!-- end form for validations -->
 
@@ -65,7 +53,6 @@
                 </div>
             </div>
         </div>
-
 
 
     </div>
@@ -91,7 +78,8 @@
     }
 </script>
 
-<!-- jQuery -->
+
+-- jQuery -->
 <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
 
 <!-- iCheck -->
@@ -112,8 +100,6 @@
 <script src="{{ asset('assets/vendors/jszip/dist/jszip.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
-
-<script src="{{ asset('assets/vendors/select2/dist/js/select2.full.min.js') }}"></script>
 
 
 

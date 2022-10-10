@@ -101,7 +101,7 @@
                                                         <button class="btn btn-secondary copy" value="copy" onclick="copyToClipboard('copy_{{ $folder->id }}')">Copy</button>
                                                     </td>
                                                     <td class="action_td">
-                                                        {{-- <a href="{{url('edit_user', $folder->id)}}" class="text-primary edit_button"><i class="ri-ball-pen-fill"></i></a> --}}
+                                                        <a href="{{url('edit_folder', $folder->id)}}" class="text-primary edit_button"><i class="fa fa-edit"></i></a>
                                                         <form method="POST" action="{{url('delete_folder', $folder->id)}}">
                                                             @csrf
                                                             <button type="submit" class="text-danger delete_button" data-toggle="tooltip"

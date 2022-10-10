@@ -3,6 +3,7 @@
 
 @php
     $user_session_details = Session::get('user_session');
+    $user_id = $user_session_details[0]->id;
 @endphp
 
 <!-- page content -->
@@ -87,7 +88,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <div class="row">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
                                 {{-- <p class="text-muted font-13 m-b-30">
@@ -99,15 +100,13 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Description</th>
-                                            @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin")
-                                                <th>View</th>
-                                                <th>Download</th>
-                                            @endif
+                                            <th>View</th>
+                                            <th>Download</th>
                                             <th>Created By</th>
                                             <th>Created At</th>
                                             <th>Updated By</th>
                                             <th>Updated At</th>
-                                            <th>Action</th>
+                                            {{-- <th>Action</th> --}}
                                         </tr>
                                     </thead>
 
@@ -117,19 +116,39 @@
                                                 <td>{{$my_files->id}}</th>
                                                 <td>{{$my_files->title}}</td>
                                                 <td>{{$my_files->description}}</td>
-                                                @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin")
+                                                <td>
+                                                    <a href="{{url('view_file', $my_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{url('download_file', $my_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                </td>
+
+                                                {{-- @if ($my_files->access_to != NULL || $my_files->access_to != "")
                                                     <td>
-                                                        <a href="{{url('view_file', $my_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                        @foreach ( json_decode($my_files->access_to, true) as $item)
+                                                            @if ($item['user_id'] == $user_id)
+                                                                <a href="{{url('view_file', $my_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                            @endif
+                                                        @endforeach
                                                     </td>
+
                                                     <td>
-                                                        <a href="{{url('download_file', $my_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                        @foreach ( json_decode($my_files->access_to, true) as $item)
+                                                            @if ($item['user_id'] == $user_id)
+                                                                <a href="{{url('download_file', $my_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                            @endif
+                                                        @endforeach
                                                     </td>
-                                                @endif
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif --}}
+
                                                 <td>{{$my_files->created_by}}</td>
                                                 <td>{{$my_files->created_at}}</td>
                                                 <td>{{$my_files->updated_by}}</td>
                                                 <td>{{$my_files->updated_at}}</td>
-                                                <td class="action_td">
+                                                {{-- <td class="action_td">
                                                     <a href="{{url('edit_file', $my_files->id)}}" class="text-primary edit_button"><i class="fa fa-edit"></i></a>
                                                     <form method="POST" action="{{route('delete_file', $my_files->id)}}">
                                                         @csrf
@@ -137,7 +156,7 @@
                                                         data-placement="top" data-original-title="Delete"><i class="fa fa-trash"></i></button>
                                                     </form>
 
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                     @endforeach
                                     </tbody>
@@ -148,6 +167,117 @@
                 </div>
             </div>
         </div>
+
+
+        @if ($user_session_details[0]->role == 'Basic')
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Other Files I Have Access To <small></small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                    <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <table id="datatable-buttons my_table1" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>View</th>
+                                                <th>Download</th>
+                                                <th>Created By</th>
+                                                <th>Created At</th>
+                                                <th>Updated By</th>
+                                                <th>Updated At</th>
+                                                {{-- <th>Action</th> --}}
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($get_all_files as $all_files)
+                                                @if ($all_files->access_to != NULL || $all_files->access_to != "")
+                                                    @foreach ( json_decode($all_files->access_to, true) as $item)
+                                                        {{-- @if(in_array($item['user_id'], $user_id)) --}}
+                                                        @if($item['user_id'] == $user_id)
+                                                            <tr>
+                                                                <th scope="row">{{$all_files->id}}</th>
+                                                                <td>{{$all_files->title}}</td>
+                                                                <td>{{$all_files->description}}</td>
+                                                                <td>
+                                                                    <a href="{{url('view_file', $my_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="{{url('download_file', $my_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                                </td>
+                                                                <td>{{$all_files->created_by}}</td>
+                                                                <td>{{$all_files->created_at}}</td>
+                                                                <td>{{$all_files->updated_by}}</td>
+                                                                <td>{{$all_files->updated_at}}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+
+                                                {{-- <tr>
+                                                    <th scope="row">{{$all_files->id}}</th>
+                                                    <td>{{$all_files->title}}</td>
+                                                    <td>{{$all_files->description}}</td>
+                                                    @if ($my_files->access_to != NULL || $my_files->access_to != "")
+                                                        <td>
+                                                            @foreach ( json_decode($my_files->access_to, true) as $item)
+                                                                @if ($item['user_id'] == $user_id)
+                                                                    <a href="{{url('view_file', $my_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+
+                                                        <td>
+                                                            @foreach ( json_decode($my_files->access_to, true) as $item)
+                                                                @if ($item['user_id'] == $user_id)
+                                                                    <a href="{{url('download_file', $my_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                    @else
+                                                        <td></td>
+                                                        <td></td>
+                                                    @endif
+
+
+                                                    <td>{{$all_files->created_by}}</td>
+                                                    <td>{{$all_files->created_at}}</td>
+                                                    <td>{{$all_files->updated_by}}</td>
+                                                    <td>{{$all_files->updated_at}}</td>
+                                                    <td class="action_td">
+                                                        <a href="{{url('edit_file', $all_files->id)}}" class="text-primary edit_button"><i class="fa fa-edit"></i></a>
+                                                        <form method="POST" action="{{route('delete_file', $all_files->id)}}">
+                                                            @csrf
+                                                            <button type="submit" class="text-danger delete_button" data-toggle="tooltip"
+                                                            data-placement="top" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                                        </form>
+
+                                                    </td>
+                                                </tr> --}}
+                                            {{-- @endforeach --}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         @if ($user_session_details[0]->role == 'Super Admin' || $user_session_details[0]->role == 'Admin')
             <div class="col-md-12 col-sm-12 ">
@@ -172,10 +302,12 @@
                                                 <th>#</th>
                                                 <th>Name</th>
                                                 <th>Description</th>
-                                                @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin")
+                                                {{-- @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin") --}}
                                                     <th>View</th>
                                                     <th>Download</th>
-                                                @endif
+                                                {{-- @endif --}}
+
+
                                                 <th>Created By</th>
                                                 <th>Created At</th>
                                                 <th>Updated By</th>
@@ -185,34 +317,37 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($get_all_files as $all_files)
-                                                <tr>
-                                                    <th scope="row">{{$all_files->id}}</th>
-                                                    <td>{{$all_files->title}}</td>
-                                                    <td>{{$all_files->description}}</td>
-                                                    @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin")
-                                                        <td>
-                                                            <a href="{{url('view_file', $all_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{url('download_file', $all_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
-                                                        </td>
-                                                    @endif
-                                                    <td>{{$all_files->created_by}}</td>
-                                                    <td>{{$all_files->created_at}}</td>
-                                                    <td>{{$all_files->updated_by}}</td>
-                                                    <td>{{$all_files->updated_at}}</td>
-                                                    <td class="action_td">
-                                                        <a href="{{url('edit_file', $all_files->id)}}" class="text-primary edit_button"><i class="fa fa-edit"></i></a>
-                                                        <form method="POST" action="{{route('delete_file', $all_files->id)}}">
-                                                            @csrf
-                                                            <button type="submit" class="text-danger delete_button" data-toggle="tooltip"
-                                                            data-placement="top" data-original-title="Delete"><i class="fa fa-trash"></i></button>
-                                                        </form>
+                                            @if($get_all_files)
+                                                @foreach ($get_all_files as $all_files)
+                                                    <tr>
+                                                        <th scope="row">{{$all_files->id}}</th>
+                                                        <td>{{$all_files->title}}</td>
+                                                        <td>{{$all_files->description}}</td>
 
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        {{-- @if ($user_session_details[0]->role == "Super Admin" || $user_session_details[0]->role == "Admin") --}}
+                                                            <td>
+                                                                <a href="{{url('view_file', $all_files->id)}}" class="btn btn-secondary view"><i class="bi bi-eye"></i> View</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{url('download_file', $all_files->id)}}" class="btn btn-secondary download"><i class="ri-download-cloud-2-line"></i> Download </a>
+                                                            </td>
+                                                        {{-- @endif --}}
+                                                        <td>{{$all_files->created_by}}</td>
+                                                        <td>{{$all_files->created_at}}</td>
+                                                        <td>{{$all_files->updated_by}}</td>
+                                                        <td>{{$all_files->updated_at}}</td>
+                                                        <td class="action_td">
+                                                            <a href="{{url('edit_file', $all_files->id)}}" class="text-primary edit_button"><i class="fa fa-edit"></i></a>
+                                                            <form method="POST" action="{{route('delete_file', $all_files->id)}}">
+                                                                @csrf
+                                                                <button type="submit" class="text-danger delete_button" data-toggle="tooltip"
+                                                                data-placement="top" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                                            </form>
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

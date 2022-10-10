@@ -83,6 +83,8 @@ Route::group(['middleware' => 'disable_back_button'], function () {
         // CREATE FOLDER ========================
         Route::get('create_folder', [FolderController::class, 'index']);
         Route::post('create_folder', [FolderController::class, 'create_folder'])->name('create_folder');
+        Route::get('edit_folder/{id}', [FolderController::class, 'edit_folder'])->name('edit_folder');
+        Route::post('update_folder/{id}', [FolderController::class, 'update_folder'])->name('update_folder');
         Route::post('delete_folder/{id}', [FolderController::class, 'delete_folder'])->name('delete_folder');
 
         // USER GROUPS ========================

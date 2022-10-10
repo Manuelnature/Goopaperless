@@ -7,6 +7,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Folder;
 use Storage;
 use Carbon\Carbon;
+use Session;
 use Log;
 
 class FolderController extends Controller
@@ -79,6 +80,37 @@ class FolderController extends Controller
     //     }
     // }
 
+    public function edit_folder($id){
+        try {
+            // $file_to_edit = UploadFile::find($id);
+            // $get_all_users = User::all();
+            $folder_to_edit = Folder::find($id);
+
+            return view('pages.edit_folder', compact('folder_to_edit'));
+        } catch (exception $e) {
+            echo 'Caught exception';
+        }
+    }
+
+    public function update_folder(Request $request, $id){
+        try {
+            $user_session = Session::get('user_session')[0];
+            $active_user = $user_session->firstname." ".$user_session->lastname;
+            $today_date = Carbon::now()->toDateTimeString();
+
+            $update_folder = Folder::find($id);
+            $update_folder->name = $request->get('txt_edit_folder_name');
+            $update_folder->description = $request->get('txt_edit_folder_description');
+            $update_folder->updated_at = $today_date;
+            $update_folder->updated_by = $active_user;
+            $update_folder->save();
+
+            return redirect('create_folder');
+        } catch (exception $e) {
+            echo 'Caught exception';
+        }
+    }
+
 
     public function delete_folder($id){
         try {
@@ -89,7 +121,7 @@ class FolderController extends Controller
             $get_folder->delete();
 
             Alert::toast('Folder Deleted','warning');
-            return redirect('pages.create_folder');
+            return redirect('create_folder');
         } catch (exception $e) {
             echo 'Caught exception';
         }
