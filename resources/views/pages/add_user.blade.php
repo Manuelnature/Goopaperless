@@ -113,7 +113,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>All Users <small></small></h2>
+                    <h2>Users Pending Approval<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -142,7 +142,67 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($all_users as $users)
+                                        @foreach ($unapproved_users as $users)
+                                            <tr>
+                                                <td>{{$users->firstname}} {{$users->lastname}}</td>
+                                                <td>{{$users->email}}</td>
+                                                <td>{{$users->city}}</td>
+                                                <td>{{$users->role}}</td>
+                                                <td>{{$users->phone_number}}</td>
+                                                <td>{{$users->profession}}</td>
+                                                <td>{{$users->address}}</td>
+                                                <td class="action_td">
+                                                    <a href="{{url('edit_user', $users->id)}}" class="text-success edit_button">Approve</a>
+                                                    <form method="POST" action="{{url('delete_user', $users->id)}}">
+                                                        @csrf
+                                                        <button type="submit" class="text-danger delete_button" data-toggle="tooltip"
+                                                        data-placement="top" data-original-title="Delete">Reject</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>All Approved Users <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                {{-- <p class="text-muted font-13 m-b-30">
+                                The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
+                                </p> --}}
+                                <table id="datatable-buttons my_table1" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>City</th>
+                                        <th>Role</th>
+                                        <th>Phone</th>
+                                        <th>Profession</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($approved_users as $users)
                                             <tr>
                                                 <td>{{$users->firstname}} {{$users->lastname}}</td>
                                                 <td>{{$users->email}}</td>

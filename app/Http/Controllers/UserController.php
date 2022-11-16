@@ -13,10 +13,11 @@ use Session;
 class UserController extends Controller
 {
     public function index(){
-        $all_users = User::all();
+        $approved_users = User::where('status', 'Approved')->get();
+        $unapproved_users = User::where('status', 'Unapproved')->get();
         // $all_users = User::load_users();
         // dd($all_users);
-        return view('pages.add_user', compact('all_users'));
+        return view('pages.add_user', compact('approved_users', 'unapproved_users'));
     }
 
     public function add_user(Request $request){

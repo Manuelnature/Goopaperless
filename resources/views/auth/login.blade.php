@@ -67,8 +67,8 @@
         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
           <div class="d-flex justify-content-center py-4">
-            <a href="index.html" class="logo d-flex align-items-center w-auto">
-              <img src="assets/img/logo.png" alt="">
+            <a href="#" class="logo d-flex align-items-center w-auto">
+              {{-- <img src="assets/img/logo.png" alt=""> --}}
               <span class="d-none d-lg-block" id="company_name">GooPaperless</span>
             </a>
           </div><!-- End Logo -->
@@ -82,7 +82,7 @@
                 {{-- <p class="text-center small">Enter your personal details to create account</p> --}}
               </div>
 
-              <form action="{{route('login_user')}}" method="post" class="row g-3" >
+              <form action="{{route('login_user')}}" method="post" class="row g-3 " >
                 @csrf
 
                 <div class="col-12 mb-3">
@@ -108,8 +108,6 @@
 
             </div>
           </div>
-
-
 
         </div>
       </div>
