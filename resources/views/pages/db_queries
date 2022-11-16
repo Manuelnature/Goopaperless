@@ -1,0 +1,1 @@
+ALTER TABLE `tbl_users`  ADD `status` VARCHAR(100) NULL  AFTER `role`;

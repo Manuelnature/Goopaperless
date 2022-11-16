@@ -198,6 +198,7 @@ class UserController extends Controller
 
 
 
+
     public function delete_user(User $id){
         try {
             $id->delete();

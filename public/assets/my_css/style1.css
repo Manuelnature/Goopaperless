@@ -87,6 +87,16 @@
     color: #2A3F54 !important;
 }
 
+.submit{
+    background-color:  #2A3F54 !important;
+    color: #fff !important;
+}
+
 .color_white {
     color: #fff !important;
+}
+
+#company_name {
+    font-size: 20px;
+    font-weight: 600;
 }

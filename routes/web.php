@@ -23,8 +23,8 @@ Route::group(['middleware' => 'disable_back_button'], function () {
 
     Route::post('user_login', [LoginController::class, 'user_login'])->name('login_user');
 
-    Route::get('auth.register', [RegisterController::class, 'index']);
-    Route::post('register', [RegisterController::class, 'user_register'])->name('register_user');
+    Route::get('register', [RegisterController::class, 'index']);
+    Route::post('user_register', [RegisterController::class, 'register'])->name('user_register');
 
     Route::get('auth.set_password', [SetPasswordController::class, 'index']);
     Route::post('auth.set_password', [SetPasswordController::class, 'set_password'])->name('set_user_password');
